@@ -2,8 +2,27 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-        Title="RemindMe" Height="450" Width="300">
-    <Grid>
-        <wv2:WebView2 x:Name="WebView" />
+        Title="RemindMe" Height="450" Width="300"
+        Topmost="True" ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="None">
+    <Grid x:Name="RootGrid" MouseEnter="RootGrid_MouseEnter" MouseLeave="RootGrid_MouseLeave">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Thumb x:Name="DragHandle" Width="10" Grid.Column="0"
+               Background="Gray" DragDelta="DragHandle_DragDelta"
+               DragCompleted="DragHandle_DragCompleted"/>
+
+        <Grid x:Name="ContentGrid" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Button x:Name="PinButton" Content="📌" Width="30" Height="30"
+                    Margin="2" Click="PinButton_Click"/>
+            <wv2:WebView2 x:Name="WebView" Grid.Row="1" />
+        </Grid>
     </Grid>
 </Window>
